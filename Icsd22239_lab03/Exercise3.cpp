@@ -4,20 +4,17 @@
 template <typename T>
 class BinaryNode {
     private:
-
         T User_ID;
-        BinaryNode<T> *Left, *Right;
+        BinaryNode<T> *Left, *Right, *Parent;
 
     public:
         BinaryNode(T User_ID){
             this->User_ID = User_ID;
-            this->Left = NULL;
-            this->Right = NULL;
+            this->Parent, this->Left, this->Right = NULL;
         };
 
         BinaryNode(){
-            this->Left = NULL;
-            this->Right = NULL;
+            this->Parent, this->Left, this->Right = NULL;
         };
 
         BinaryNode<T> * insert_BinaryNode(BinaryNode<T> **root, T User_ID) {
@@ -53,6 +50,7 @@ class BinaryNode {
                 return;
             }
             
+          
             printf("%d ", root->User_ID);
             printPreOrder(root->Left);
             printPreOrder(root->Right);
@@ -113,19 +111,17 @@ class BinaryNode {
     
 
 int main(int argc, char const *argv[]) {
+   
     BinaryNode<int> *root = new BinaryNode<int>();
-    
 
-    int choice, val, del_val;
+    int choice, val, del_val, c;
     std::cout << "Give choice: " << std::endl;
     std::cin >> choice;
 
     while (choice != 0) {
-        
-        if (choice == 1) {
+        if (choice == 1) {   
             std::cout << "Give data: " << std::endl;
-            std::cin >> val;
-            
+            std::cin >> val;        
             (*root).insert_BinaryNode(&root, val);
         }
 
