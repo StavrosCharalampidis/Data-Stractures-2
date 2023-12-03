@@ -56,17 +56,6 @@ public:
         inorder(root->Right);
     }
 
-    void printPreOrder(BinaryNode<T> *root)
-    {
-        if (root == NULL)
-        {
-            return;
-        }
-
-        std::cout << root->User_Name << " ";
-        printPreOrder(root->Left);
-        printPreOrder(root->Right);
-    }
 
     BinaryNode<T> *Delete(BinaryNode<T> *root, std::string User_Name)
     {
@@ -300,6 +289,15 @@ public:
         }
         std::cout << std::endl;
     }
+
+    int countUsers(BinaryNode<T> *root){
+        int count;
+        if (root == NULL)
+        {
+            return -1;
+        }
+        return 1 + countUsers(root->Left) + countUsers(root->Right);
+    }
 };
 
 int main()
@@ -321,8 +319,7 @@ int main()
 
         if (choice == 2)
         {
-            printf("\npreorder \n");
-            root->printPreOrder(root);
+           std::cout << "the number of count is %d: " << root->countUsers(root) << std::endl; 
         }
 
         if (choice == 3)
