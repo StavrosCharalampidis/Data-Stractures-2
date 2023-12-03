@@ -134,7 +134,7 @@ class BinaryNode {
         }
 };
 
-Konstantinos Konstantouros
+
 int main(int argc, char *argv[]) {
     BinaryNode<std::string> *root = NULL;
     int choice;
