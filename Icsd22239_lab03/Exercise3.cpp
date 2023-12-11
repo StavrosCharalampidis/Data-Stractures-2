@@ -6,27 +6,31 @@ template <typename T>
 class BinaryNode
 {
 private:
+    std::string User_ID;
     std::string User_Name;
+    std::string Last_Name;
     std::vector<std::string> contacts;
-    BinaryNode<T> *Left, *Right, *Parent;
+    BinaryNode<T> *Left, *Right;
 
 public:
-    BinaryNode(std::string User_Name)
+    BinaryNode(std::string User_Name, std::string User_ID, std::string Last_Name)
     {
         this->User_Name = User_Name;
-        this->Parent, this->Left, this->Right = NULL;
+        this->User_ID = User_ID;
+        this->Last_Name = Last_Name;
+        this->Left, this->Right = NULL;
     };
 
     BinaryNode()
     {
-        this->Parent, this->Left, this->Right = NULL;
+        this->Left, this->Right = NULL;
     };
 
-    BinaryNode<T> *insert_BinaryNode(BinaryNode<T> **root, std::string User_Name)
+    BinaryNode<T> *insert_BinaryNode(BinaryNode<T> **root, std::string User_Name, std::string User_ID, std::string Last_Name)
     {
         if (*root == NULL)
         {
-            BinaryNode<T> *new_BinaryNode = new BinaryNode<T>(User_Name);
+            BinaryNode<T> *new_BinaryNode = new BinaryNode<T>(User_Name, User_ID, Last_Name);
             new_BinaryNode->Left = NULL;
             new_BinaryNode->Right = NULL;
             *root = new_BinaryNode;
@@ -35,11 +39,11 @@ public:
 
         if (User_Name < (*root)->User_Name)
         {
-            (*root)->Left = insert_BinaryNode(&(*root)->Left, User_Name);
+            (*root)->Left = insert_BinaryNode(&(*root)->Left, User_Name, User_ID, Last_Name);
         }
         else
         {
-            (*root)->Right = insert_BinaryNode(&(*root)->Right, User_Name);
+            (*root)->Right = insert_BinaryNode(&(*root)->Right, User_Name, User_ID, Last_Name);
         }
         return *root;
     }
@@ -52,10 +56,9 @@ public:
         }
 
         inorder(root->Left);
-        std::cout << root->User_Name << " ";
+        std::cout << root->User_Name << " " << std::endl;
         inorder(root->Right);
     }
-
 
     BinaryNode<T> *Delete(BinaryNode<T> *root, std::string User_Name)
     {
@@ -290,13 +293,55 @@ public:
         std::cout << std::endl;
     }
 
-    int countUsers(BinaryNode<T> *root){
-        int count;
+    int countUsers(BinaryNode<T> *root)
+    {
         if (root == NULL)
         {
-            return -1;
+            return 0;
         }
+
         return 1 + countUsers(root->Left) + countUsers(root->Right);
+    }
+
+
+    //s
+    BinaryNode<T>* searchUser(BinaryNode<T> *root, std::string name) {
+        if (root == NULL || root->User_Name == name) {
+            return root;
+        }
+
+        if (name < root->User_Name) {
+            return searchUser(root->Left, name);
+        } else {
+            return searchUser(root->Right, name);
+        }
+    }
+
+    void displayUser(BinaryNode<T> *root) {
+        if (root != NULL) {
+            std::cout << "User ID: " << root->User_ID << std::endl;
+            std::cout << "User Name: " << root->User_Name << std::endl;
+            std::cout << "Last Name: " << root->Last_Name << std::endl;
+        }
+    }
+
+    void displayContacts(BinaryNode<T> *root) {
+        if (root != NULL) {
+            std::cout << "Contacts of " << root->User_Name << ": " << std::endl;
+            //root->contacts
+        }
+    }
+    
+    void searchAndDisplayUser(BinaryNode<T> *root, std::string name) {
+        BinaryNode<std::string>* user = searchUser(root, name);
+
+        if (user != NULL) {
+            std::cout << "User found:" << std::endl;
+            displayUser(user);
+            displayContacts(user);
+        } else {
+            std::cout << "User with name " << name << " not found." << std::endl;
+        }
     }
 };
 
@@ -304,7 +349,9 @@ int main()
 {
     BinaryNode<std::string> *root = NULL;
     int choice;
-    std::string name, friend_name;
+    std::string name, last, id;
+
+    std::string friend_name, search_name;
     std::cout << "Give choice: " << std::endl;
     std::cin >> choice;
 
@@ -314,12 +361,18 @@ int main()
         {
             std::cout << "Give user name: " << std::endl;
             std::cin >> name;
-            root->insert_BinaryNode(&root, name);
+
+            std::cout << "Give user last name: " << std::endl;
+            std::cin >> last;
+
+            std::cout << "Give user id: " << std::endl;
+            std::cin >> id;
+            root->insert_BinaryNode(&root, name, id, last);
         }
 
         if (choice == 2)
         {
-           std::cout << "the number of count is %d: " << root->countUsers(root) << std::endl; 
+            std::cout << "the number of count is : " << root->countUsers(root) << std::endl;
         }
 
         if (choice == 3)
@@ -356,6 +409,12 @@ int main()
             root->check_friends(root, name, friend_name);
         }
 
+        if (choice == 7) {
+            std::cout << "Give user name to find: " << std::endl;
+            std::cin >> search_name;
+            root->searchAndDisplayUser(root, search_name);
+        }
+        
         std::cout << "Give choice: " << std::endl;
         std::cin >> choice;
     }
