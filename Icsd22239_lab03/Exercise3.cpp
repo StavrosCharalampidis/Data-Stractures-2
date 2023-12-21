@@ -48,16 +48,16 @@ public:
         return *root;
     }
 
-    void inorder(BinaryNode<T> *root)
+    void DisplayUserAlphabetically(BinaryNode<T> *root)
     {
         if (root == NULL)
         {
             return;
         }
 
-        inorder(root->Left);
+        DisplayUserAlphabetically(root->Left);
         std::cout << root->User_Name << " " << std::endl;
-        inorder(root->Right);
+        DisplayUserAlphabetically(root->Right);
     }
 
     BinaryNode<T> *Delete(BinaryNode<T> *root, std::string User_Name)
@@ -303,7 +303,6 @@ public:
         return 1 + countUsers(root->Left) + countUsers(root->Right);
     }
 
-    // s
     BinaryNode<T> *searchUser(BinaryNode<T> *root, std::string name)
     {
         if (root == NULL || root->User_Name == name)
@@ -329,7 +328,7 @@ public:
         {
             std::cout << "User found:" << std::endl;
             std::cout << "User ID: " << user->User_ID << " User Name: " << user->User_Name << " Last Name: " << user->Last_Name << std::endl;
-            std::cout << "Contacts of " << user->User_Name << ": " << std::endl; // user->contacts
+            std::cout << "Contacts of " << user->User_Name << ": " << std::endl;
         }
         else
         {
@@ -343,13 +342,30 @@ int main()
     BinaryNode<std::string> *root = NULL;
     int choice;
     std::string name, last, id;
-
     std::string friend_name, search_name, delname;
-    std::cout << "Give choice: " << std::endl;
-    std::cin >> choice;
 
-    while (choice != 0)
+    while (true)
     {
+        // menu
+        std::cout << " " << std::endl;
+        std::cout << "Give 0 for exit: " << std::endl;
+        std::cout << "Give 1 for insert User in Tree: " << std::endl;
+        std::cout << "Give 2 for count all Users in Tree: " << std::endl;
+        std::cout << "Give 3 for Display User Alphabetically: " << std::endl;
+        std::cout << "Give 4 for Update connections between users: " << std::endl;
+        std::cout << "Give 5 for find mutual friends: " << std::endl;
+        std::cout << "Give 6 for check friends: " << std::endl;
+        std::cout << "Give 7 Search for a user and display their details: " << std::endl;
+        std::cout << "Give 8 User to delete: " << std::endl;
+
+        std::cout << "Give choice: " << std::endl;
+        std::cin >> choice;
+
+        if (choice == 0)
+        {
+            exit(0);
+        }
+
         if (choice == 1)
         {
             std::cout << "Give user name: " << std::endl;
@@ -370,8 +386,8 @@ int main()
 
         if (choice == 3)
         {
-            printf("inorder \n");
-            root->inorder(root);
+            printf("print all users alphabetically \n");
+            root->DisplayUserAlphabetically(root);
         }
 
         if (choice == 4)
@@ -414,11 +430,7 @@ int main()
             std::cout << "Give user name to delete: " << std::endl;
             std::cin >> delname;
             root->Delete(root, delname);
-            /* code */
         }
-        
-        std::cout << "Give choice: " << std::endl;
-        std::cin >> choice;
     }
 
     return 0;
