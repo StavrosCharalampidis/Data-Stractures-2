@@ -37,14 +37,22 @@ public:
             return new_BinaryNode;
         }
 
+        if (User_Name == (*root)->User_Name)
+        {
+            std::cout << "User with User Name '" << User_Name << "' already exists. Cannot add duplicate users." << std::endl;
+            return *root;
+        }
+
         if (User_Name < (*root)->User_Name)
         {
             (*root)->Left = insert_BinaryNode(&(*root)->Left, User_Name, User_ID, Last_Name);
         }
+
         else
         {
             (*root)->Right = insert_BinaryNode(&(*root)->Right, User_Name, User_ID, Last_Name);
         }
+        
         return *root;
     }
 
@@ -303,7 +311,7 @@ public:
         return 1 + countUsers(root->Left) + countUsers(root->Right);
     }
 
-    void searchAndDisplayUser(BinaryNode<T> *root, std::string targetUser)
+    void searchAndDisplayUser(BinaryNode<T> *root, std::string User)
     {
         if (root == NULL)
         {
@@ -315,12 +323,12 @@ public:
 
         while (root != NULL)
         {
-            if (root->User_Name == targetUser)
+            if (root->User_Name == User)
             {
                 userNode = root;
                 break;
             }
-            else if (targetUser < root->User_Name)
+            else if (User < root->User_Name)
             {
                 root = root->Left;
             }
@@ -332,7 +340,7 @@ public:
 
         if (userNode == NULL)
         {
-            std::cout << "User with User Name '" << targetUser << "' not found in the social network." << std::endl;
+            std::cout << "User with User Name '" << User << "' not found in the social network." << std::endl;
             return;
         }
 
