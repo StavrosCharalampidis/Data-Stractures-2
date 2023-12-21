@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 
-template <typename T>
 class BinaryNode
 {
 private:
@@ -10,7 +9,7 @@ private:
     std::string User_Name;
     std::string Last_Name;
     std::vector<std::string> contacts;
-    BinaryNode<T> *Left, *Right;
+    BinaryNode *Left, *Right;
 
 public:
     BinaryNode(std::string User_Name, std::string User_ID, std::string Last_Name)
@@ -26,11 +25,11 @@ public:
         this->Left, this->Right = NULL;
     };
 
-    BinaryNode<T> *insert_BinaryNode(BinaryNode<T> **root, std::string User_Name, std::string User_ID, std::string Last_Name)
+    BinaryNode *insert_BinaryNode(BinaryNode **root, std::string User_Name, std::string User_ID, std::string Last_Name)
     {
         if (*root == NULL)
         {
-            BinaryNode<T> *new_BinaryNode = new BinaryNode<T>(User_Name, User_ID, Last_Name);
+            BinaryNode *new_BinaryNode = new BinaryNode(User_Name, User_ID, Last_Name);
             new_BinaryNode->Left = NULL;
             new_BinaryNode->Right = NULL;
             *root = new_BinaryNode;
@@ -52,11 +51,11 @@ public:
         {
             (*root)->Right = insert_BinaryNode(&(*root)->Right, User_Name, User_ID, Last_Name);
         }
-        
+
         return *root;
     }
 
-    void DisplayUserAlphabetically(BinaryNode<T> *root)
+    void DisplayUserAlphabetically(BinaryNode *root)
     {
         if (root == NULL)
         {
@@ -68,7 +67,7 @@ public:
         DisplayUserAlphabetically(root->Right);
     }
 
-    BinaryNode<T> *Delete(BinaryNode<T> *root, std::string User_Name)
+    BinaryNode *Delete(BinaryNode *root, std::string User_Name)
     {
         if (root == NULL)
         {
@@ -86,17 +85,17 @@ public:
         {
             if (root->Left == NULL)
             {
-                BinaryNode<T> *temp = root->Right;
+                BinaryNode *temp = root->Right;
                 delete root;
                 return temp;
             }
             else if (root->Right == NULL)
             {
-                BinaryNode<T> *temp = root->Left;
+                BinaryNode *temp = root->Left;
                 delete root;
                 return temp;
             }
-            BinaryNode<T> *temp = root->Right;
+            BinaryNode *temp = root->Right;
             while (temp->Left != NULL)
             {
                 temp = temp->Left;
@@ -112,7 +111,7 @@ public:
         contacts.push_back(contact);
     }
 
-    void accept_friend_request(BinaryNode<T> *root, std::string friend_Name)
+    void accept_friend_request(BinaryNode *root, std::string friend_Name)
     {
         if (root == NULL)
         {
@@ -133,7 +132,7 @@ public:
         }
     }
 
-    void update_connections(BinaryNode<T> *root, std::string user_Name, std::string friend_Name)
+    void update_connections(BinaryNode *root, std::string user_Name, std::string friend_Name)
     {
         if (root == NULL)
         {
@@ -154,7 +153,7 @@ public:
         }
     }
 
-    void check_friends(BinaryNode<T> *root, std::string user1, std::string user2)
+    void check_friends(BinaryNode *root, std::string user1, std::string user2)
     {
         if (root == NULL)
         {
@@ -162,8 +161,8 @@ public:
             return;
         }
 
-        BinaryNode<std::string> *user1_node = NULL;
-        BinaryNode<std::string> *user2_node = NULL;
+        BinaryNode *user1_node = NULL;
+        BinaryNode *user2_node = NULL;
 
         while (root != NULL)
         {
@@ -200,7 +199,7 @@ public:
         std::cout << user1 << " and " << user2 << " are not friends." << std::endl;
     }
 
-    void find_mutual_friends(BinaryNode<T> *root, std::string user1, std::string user2)
+    void find_mutual_friends(BinaryNode *root, std::string user1, std::string user2)
     {
         if (root == NULL)
         {
@@ -208,8 +207,8 @@ public:
             return;
         }
 
-        BinaryNode<std::string> *user1_node = NULL;
-        BinaryNode<std::string> *user2_node = NULL;
+        BinaryNode *user1_node = NULL;
+        BinaryNode *user2_node = NULL;
 
         while (root != NULL)
         {
@@ -301,7 +300,7 @@ public:
         std::cout << std::endl;
     }
 
-    int countUsers(BinaryNode<T> *root)
+    int countUsers(BinaryNode *root)
     {
         if (root == NULL)
         {
@@ -311,7 +310,7 @@ public:
         return 1 + countUsers(root->Left) + countUsers(root->Right);
     }
 
-    void searchAndDisplayUser(BinaryNode<T> *root, std::string User)
+    void searchAndDisplayUser(BinaryNode *root, std::string User)
     {
         if (root == NULL)
         {
@@ -319,7 +318,7 @@ public:
             return;
         }
 
-        BinaryNode<T> *userNode = NULL;
+        BinaryNode *userNode = NULL;
 
         while (root != NULL)
         {
@@ -367,7 +366,7 @@ public:
 
 int main()
 {
-    BinaryNode<std::string> *root = NULL;
+    BinaryNode *root = NULL;
     int choice;
     std::string name, last;
     int id = 0;
