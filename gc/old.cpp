@@ -146,7 +146,7 @@ public:
         }
     }
 
-    void check_friends(BinaryNode<T> *root, std::string user1, std::string user2)
+    void check_friends(BinaryNode<std::string> *root, std::string user1, std::string user2)
     {
         if (root == NULL)
         {
@@ -192,7 +192,7 @@ public:
         std::cout << user1 << " and " << user2 << " are not friends." << std::endl;
     }
 
-    void find_mutual_friends(BinaryNode<T> *root, std::string user1, std::string user2)
+    void find_mutual_friends(BinaryNode<std::string> *root, std::string user1, std::string user2)
     {
         if (root == NULL)
         {
@@ -303,56 +303,36 @@ public:
         return 1 + countUsers(root->Left) + countUsers(root->Right);
     }
 
-    void searchAndDisplayUser(BinaryNode<T> *root, std::string targetUser)
+    BinaryNode<T> *searchUser(BinaryNode<T> *root, std::string name)
     {
-        if (root == NULL)
+        if (root == NULL || root->User_Name == name)
         {
-            std::cout << "The social network is empty." << std::endl;
-            return;
+            return root;
         }
 
-        BinaryNode<T> *userNode = NULL;
-
-        while (root != NULL)
+        if (name < root->User_Name)
         {
-            if (root->User_Name == targetUser)
-            {
-                userNode = root;
-                break;
-            }
-            else if (targetUser < root->User_Name)
-            {
-                root = root->Left;
-            }
-            else
-            {
-                root = root->Right;
-            }
-        }
-
-        if (userNode == NULL)
-        {
-            std::cout << "User with User Name '" << targetUser << "' not found in the social network." << std::endl;
-            return;
-        }
-
-        std::cout << "User Details:" << std::endl;
-        std::cout << "User Name: " << userNode->User_Name << std::endl;
-        std::cout << "User ID: " << userNode->User_ID << std::endl;
-        std::cout << "Last Name: " << userNode->Last_Name << std::endl;
-
-        if (!userNode->contacts.empty())
-        {
-            std::cout << "Contacts: ";
-            for (const std::string &contact : userNode->contacts)
-            {
-                std::cout << contact << " ";
-            }
-            std::cout << std::endl;
+            return searchUser(root->Left, name);
         }
         else
         {
-            std::cout << "No contacts for this user." << std::endl;
+            return searchUser(root->Right, name);
+        }
+    }
+
+    void searchAndDisplayUser(BinaryNode<T> *root, std::string name)
+    {
+        BinaryNode<std::string> *user = searchUser(root, name);
+
+        if (user != NULL)
+        {
+            std::cout << "User found:" << std::endl;
+            std::cout << "User ID: " << user->User_ID << " User Name: " << user->User_Name << " Last Name: " << user->Last_Name << std::endl;
+            std::cout << "Contacts of " << user->User_Name << ": " << std::endl;
+        }
+        else
+        {
+            std::cout << "User with name " << name << " not found." << std::endl;
         }
     }
 };
