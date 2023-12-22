@@ -1,6 +1,3 @@
-//Christos Charalampidis icsd21071 
-//Stavros Charalampidis icsd22239
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -51,7 +48,7 @@ public:
             std::cout << "User with User Name '" << User_Name << "' already exists. Cannot add duplicate users." << std::endl;
             return *root;
         }
-        
+
         if (User_Name < (*root)->User_Name)
         {
             (*root)->Left = insert_BinaryNode(&(*root)->Left, User_Name, User_ID, Last_Name);
