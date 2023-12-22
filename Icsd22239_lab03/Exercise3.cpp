@@ -1,11 +1,16 @@
+//Christos Charalampidis icsd21071 
+//Stavros Charalampidis icsd22239
+
 #include <iostream>
 #include <string>
 #include <vector>
 
+//class BinaryNode
 template <typename T>
 class BinaryNode
 {
 private:
+    //private metablites tis clasis
     std::string User_ID;
     std::string User_Name;
     std::string Last_Name;
@@ -13,6 +18,8 @@ private:
     BinaryNode<T> *Left, *Right;
 
 public:
+    //public methodi tis clasis
+    //constructor
     BinaryNode(std::string User_Name, std::string User_ID, std::string Last_Name)
     {
         this->User_Name = User_Name;
@@ -21,11 +28,13 @@ public:
         this->Left, this->Right = NULL;
     };
 
+    //override constructor
     BinaryNode()
     {
         this->Left, this->Right = NULL;
     };
 
+    //methodos clasis gia eisagwgi sto dendro
     BinaryNode<T> *insert_BinaryNode(BinaryNode<T> **root, std::string User_Name, std::string User_ID, std::string Last_Name)
     {
         if (*root == NULL)
@@ -48,6 +57,7 @@ public:
         return *root;
     }
 
+    //emfanisi xristi me alfabitiki sira
     void DisplayUserAlphabetically(BinaryNode<T> *root)
     {
         if (root == NULL)
@@ -60,6 +70,7 @@ public:
         DisplayUserAlphabetically(root->Right);
     }
 
+    //diagrafi xristi
     BinaryNode<T> *Delete(BinaryNode<T> *root, std::string User_Name)
     {
         if (root == NULL)
@@ -99,11 +110,13 @@ public:
         return root;
     }
 
+    //methodos clasis prosthiki epafis
     void add_contact(std::string contact)
     {
         contacts.push_back(contact);
     }
 
+    //methodos clasis apodoxi etimatos filias
     void accept_friend_request(BinaryNode<T> *root, std::string friend_Name)
     {
         if (root == NULL)
@@ -125,6 +138,7 @@ public:
         }
     }
 
+    //methodos clasis ananeosi ton sindeseon ton xriston
     void update_connections(BinaryNode<T> *root, std::string user_Name, std::string friend_Name)
     {
         if (root == NULL)
@@ -146,6 +160,7 @@ public:
         }
     }
 
+    //methodos clasis elenxos filon
     void check_friends(BinaryNode<T> *root, std::string user1, std::string user2)
     {
         if (root == NULL)
@@ -192,6 +207,7 @@ public:
         std::cout << user1 << " and " << user2 << " are not friends." << std::endl;
     }
 
+    //methodos clasis ebresi kinon filon
     void find_mutual_friends(BinaryNode<T> *root, std::string user1, std::string user2)
     {
         if (root == NULL)
@@ -293,6 +309,7 @@ public:
         std::cout << std::endl;
     }
 
+    //methodos clasis metritis xriston
     int countUsers(BinaryNode<T> *root)
     {
         if (root == NULL)
@@ -303,6 +320,7 @@ public:
         return 1 + countUsers(root->Left) + countUsers(root->Right);
     }
 
+    //methodos clasis anazitisis kai emfanisis xristi
     void searchAndDisplayUser(BinaryNode<T> *root, std::string targetUser)
     {
         if (root == NULL)
@@ -357,17 +375,20 @@ public:
     }
 };
 
+//kirio programma
 int main()
 {
+    //arxikopoihsh tou root
     BinaryNode<std::string> *root = NULL;
     int choice;
     std::string name, last;
     int id = 0;
     std::string friend_name, search_name, delname;
 
+
     while (true)
     {
-        // menu
+        //menu
         std::cout << " " << std::endl;
         std::cout << "Give 0 for exit: " << std::endl;
         std::cout << "Give 1 for insert User in Tree: " << std::endl;
@@ -379,9 +400,11 @@ int main()
         std::cout << "Give 7 Search for a user and display their details: " << std::endl;
         std::cout << "Give 8 User to delete: " << std::endl;
 
+        //epilogi xristi mias diathesimis leitourgias apo to menu
         std::cout << "Give choice: " << std::endl;
         std::cin >> choice;
 
+        //elenxos tis epilogis gia na ektelesti h ekastote leitourgies
         if (choice == 0)
         {
             exit(0);
@@ -451,6 +474,7 @@ int main()
             std::cin >> delname;
             root->Delete(root, delname);
         }
+        
     }
 
     return 0;
