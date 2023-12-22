@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+template <typename T>
 class BinaryNode
 {
 private:
@@ -9,7 +10,7 @@ private:
     std::string User_Name;
     std::string Last_Name;
     std::vector<std::string> contacts;
-    BinaryNode *Left, *Right;
+    BinaryNode<T> *Left, *Right;
 
 public:
     BinaryNode(std::string User_Name, std::string User_ID, std::string Last_Name)
@@ -25,37 +26,29 @@ public:
         this->Left, this->Right = NULL;
     };
 
-    BinaryNode *insert_BinaryNode(BinaryNode **root, std::string User_Name, std::string User_ID, std::string Last_Name)
+    BinaryNode<T> *insert_BinaryNode(BinaryNode<T> **root, std::string User_Name, std::string User_ID, std::string Last_Name)
     {
         if (*root == NULL)
         {
-            BinaryNode *new_BinaryNode = new BinaryNode(User_Name, User_ID, Last_Name);
+            BinaryNode<T> *new_BinaryNode = new BinaryNode<T>(User_Name, User_ID, Last_Name);
             new_BinaryNode->Left = NULL;
             new_BinaryNode->Right = NULL;
             *root = new_BinaryNode;
             return new_BinaryNode;
         }
 
-        if (User_Name == (*root)->User_Name)
-        {
-            std::cout << "User with User Name '" << User_Name << "' already exists. Cannot add duplicate users." << std::endl;
-            return *root;
-        }
-
         if (User_Name < (*root)->User_Name)
         {
             (*root)->Left = insert_BinaryNode(&(*root)->Left, User_Name, User_ID, Last_Name);
         }
-
         else
         {
             (*root)->Right = insert_BinaryNode(&(*root)->Right, User_Name, User_ID, Last_Name);
         }
-
         return *root;
     }
 
-    void DisplayUserAlphabetically(BinaryNode *root)
+    void DisplayUserAlphabetically(BinaryNode<T> *root)
     {
         if (root == NULL)
         {
@@ -67,7 +60,7 @@ public:
         DisplayUserAlphabetically(root->Right);
     }
 
-    BinaryNode *Delete(BinaryNode *root, std::string User_Name)
+    BinaryNode<T> *Delete(BinaryNode<T> *root, std::string User_Name)
     {
         if (root == NULL)
         {
@@ -85,17 +78,17 @@ public:
         {
             if (root->Left == NULL)
             {
-                BinaryNode *temp = root->Right;
+                BinaryNode<T> *temp = root->Right;
                 delete root;
                 return temp;
             }
             else if (root->Right == NULL)
             {
-                BinaryNode *temp = root->Left;
+                BinaryNode<T> *temp = root->Left;
                 delete root;
                 return temp;
             }
-            BinaryNode *temp = root->Right;
+            BinaryNode<T> *temp = root->Right;
             while (temp->Left != NULL)
             {
                 temp = temp->Left;
@@ -111,7 +104,7 @@ public:
         contacts.push_back(contact);
     }
 
-    void accept_friend_request(BinaryNode *root, std::string friend_Name)
+    void accept_friend_request(BinaryNode<T> *root, std::string friend_Name)
     {
         if (root == NULL)
         {
@@ -132,7 +125,7 @@ public:
         }
     }
 
-    void update_connections(BinaryNode *root, std::string user_Name, std::string friend_Name)
+    void update_connections(BinaryNode<T> *root, std::string user_Name, std::string friend_Name)
     {
         if (root == NULL)
         {
@@ -153,7 +146,7 @@ public:
         }
     }
 
-    void check_friends(BinaryNode *root, std::string user1, std::string user2)
+    void check_friends(BinaryNode<T> *root, std::string user1, std::string user2)
     {
         if (root == NULL)
         {
@@ -161,8 +154,8 @@ public:
             return;
         }
 
-        BinaryNode *user1_node = NULL;
-        BinaryNode *user2_node = NULL;
+        BinaryNode<std::string> *user1_node = NULL;
+        BinaryNode<std::string> *user2_node = NULL;
 
         while (root != NULL)
         {
@@ -199,7 +192,7 @@ public:
         std::cout << user1 << " and " << user2 << " are not friends." << std::endl;
     }
 
-    void find_mutual_friends(BinaryNode *root, std::string user1, std::string user2)
+    void find_mutual_friends(BinaryNode<T> *root, std::string user1, std::string user2)
     {
         if (root == NULL)
         {
@@ -207,8 +200,8 @@ public:
             return;
         }
 
-        BinaryNode *user1_node = NULL;
-        BinaryNode *user2_node = NULL;
+        BinaryNode<std::string> *user1_node = NULL;
+        BinaryNode<std::string> *user2_node = NULL;
 
         while (root != NULL)
         {
@@ -300,7 +293,7 @@ public:
         std::cout << std::endl;
     }
 
-    int countUsers(BinaryNode *root)
+    int countUsers(BinaryNode<T> *root)
     {
         if (root == NULL)
         {
@@ -310,7 +303,7 @@ public:
         return 1 + countUsers(root->Left) + countUsers(root->Right);
     }
 
-    void searchAndDisplayUser(BinaryNode *root, std::string User)
+    void searchAndDisplayUser(BinaryNode<T> *root, std::string targetUser)
     {
         if (root == NULL)
         {
@@ -318,16 +311,16 @@ public:
             return;
         }
 
-        BinaryNode *userNode = NULL;
+        BinaryNode<T> *userNode = NULL;
 
         while (root != NULL)
         {
-            if (root->User_Name == User)
+            if (root->User_Name == targetUser)
             {
                 userNode = root;
                 break;
             }
-            else if (User < root->User_Name)
+            else if (targetUser < root->User_Name)
             {
                 root = root->Left;
             }
@@ -339,7 +332,7 @@ public:
 
         if (userNode == NULL)
         {
-            std::cout << "User with User Name '" << User << "' not found in the social network." << std::endl;
+            std::cout << "User with User Name '" << targetUser << "' not found in the social network." << std::endl;
             return;
         }
 
@@ -366,7 +359,7 @@ public:
 
 int main()
 {
-    BinaryNode *root = NULL;
+    BinaryNode<std::string> *root = NULL;
     int choice;
     std::string name, last;
     int id = 0;
@@ -374,7 +367,6 @@ int main()
 
     while (true)
     {
-
         // menu
         std::cout << " " << std::endl;
         std::cout << "Give 0 for exit: " << std::endl;
