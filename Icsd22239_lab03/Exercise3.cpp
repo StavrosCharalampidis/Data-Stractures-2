@@ -46,6 +46,12 @@ public:
             return new_BinaryNode;
         }
 
+        if (User_Name == (*root)->User_Name)
+        {
+            std::cout << "User with User Name '" << User_Name << "' already exists. Cannot add duplicate users." << std::endl;
+            return *root;
+        }
+        
         if (User_Name < (*root)->User_Name)
         {
             (*root)->Left = insert_BinaryNode(&(*root)->Left, User_Name, User_ID, Last_Name);
@@ -474,7 +480,7 @@ int main()
             std::cin >> delname;
             root->Delete(root, delname);
         }
-        
+
     }
 
     return 0;
